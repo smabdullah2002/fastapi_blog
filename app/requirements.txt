@@ -1,0 +1,13 @@
+fastapi
+fastapi[standard]
+uvicorn
+SQLAlchemy
+psycopg2
+python-dotenv
+alembic
+pydantic[email] 
+#hashing            
+passlib[bcrypt] 
+#jwt equivalent
+python-jose
+python-multipart
