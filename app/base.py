@@ -1,4 +1,7 @@
-from db.base_class import Base
+from fastapi import APIRouter
+from .auth import route_user
 
-# from db.model.blog import Blog
-# from db.model.user import User
+api_router = APIRouter()
+
+# include the user authentication routes
+api_router.include_router(route_user.router, prefix="", tags=["auth"])

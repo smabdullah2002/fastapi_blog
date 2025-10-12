@@ -10,4 +10,5 @@ pydantic[email]
 passlib[bcrypt] 
 #jwt equivalent
 python-jose
+supabase
 python-multipart
