@@ -19,3 +19,7 @@ class BlogSchema(BaseModel):
     content: str
     category: Category
     img_url: Optional[HttpUrl] = None
+    
+class CommentSchema(BaseModel):
+    blog_id:str
+    content: str

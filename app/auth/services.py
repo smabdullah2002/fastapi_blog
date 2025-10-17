@@ -10,21 +10,30 @@ from app.config import SUPABASE_JWT_SECRET
 
 
 async def create_user(user: SignupSchema):
+    # Check if user exists
     user_exists = supabase.table("user").select("*").eq("email", user.email).execute()
     if user_exists.data:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Email already registered",
         )
-    response = supabase.auth.sign_up({"email": user.email, "password": user.password})
 
+    # Create user in Supabase auth
+    response = supabase.auth.sign_up({"email": user.email, "password": user.password})
     if not response.user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Error creating user",
         )
+
+    # Insert into your database table with the correct id
     supabase.table("user").insert(
-        {"email": user.email, "username": user.username, "role": UserRole.user.value}
+        {
+            "id": response.user.id,  # ⚠️ Must include the UUID from auth
+            "email": user.email,
+            "username": user.username,
+            "role": UserRole.user.value
+        }
     ).execute()
 
     return {"message": "User created successfully.", "user": response.user}
